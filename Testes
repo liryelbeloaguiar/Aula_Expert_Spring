@@ -1,0 +1,43 @@
+@Bean
+	public CommandLineRunner init(@Autowired RepositoryCliente repositoryCliente){
+		return args -> {
+			repositoryCliente.save( new Cliente("Liryel"));
+			repositoryCliente.save( new Cliente("Lara"));
+			repositoryCliente.save( new Cliente("Jotinha"));
+
+			List<Cliente> todosClientes = repositoryCliente.findAll();
+			todosClientes.forEach(System.out::println);
+
+			todosClientes.forEach(c -> {
+				c.setNome(c.getNome()+" Atualizado");
+				repositoryCliente.save(c);
+			});
+
+			System.out.println("Todos Atualizados");
+			todosClientes = repositoryCliente.findAll();
+			todosClientes.forEach(System.out::println);
+
+			System.out.println("Todos que contenha -Jo-");
+			repositoryCliente.findByNomeLike("Jo").forEach(System.out::println);
+
+
+			//Comando Delete não está funcionando
+			System.out.println("Todos depois do delete");
+			repositoryCliente.findAll().forEach(c-> {
+				repositoryCliente.delete(c);;
+			});
+
+			todosClientes = repositoryCliente.findAll();
+			if(todosClientes.isEmpty()){
+				System.out.println("Nenhum cliente encontrado");
+			}else{
+				todosClientes.forEach(System.out::println);
+			}
+
+			System.out.println("Cso exista um cliente com o nome pesquisado ele retorna - true");
+			boolean existe = repositoryCliente.existsByNome("Liryel");
+			System.out.println(existe);
+
+
+		
+	};}
