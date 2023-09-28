@@ -1,16 +1,16 @@
 package com.aula.projetovd.entity;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
-@Table(name = "PRODUTO")
-public class Produto {
+@Table(name = "ITEM_PEDIDO")
+public class ItemPedido {
     
     private Integer id;
-    private String Descricao;
-    private BigDecimal preco;
+    private Pedido pedido;
+    private Produto produto;
+    private Integer quantidade;
+
 }

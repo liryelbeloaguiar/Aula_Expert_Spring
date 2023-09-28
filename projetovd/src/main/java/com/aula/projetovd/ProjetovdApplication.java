@@ -37,19 +37,20 @@ public class ProjetovdApplication {
 			System.out.println("Todos que contenha -Jo-");
 			repositoryCliente.pesquisaPorNome("Jo").forEach(System.out::println);
 
-			/* 
+
 			//Comando Delete não está funcionando
 			System.out.println("Todos depois do delete");
 			repositoryCliente.obterTodos().forEach(c-> {
-				repositoryCliente.deletar(2);;
+				repositoryCliente.deletar(c);;
 			});
 
+			todosClientes = repositoryCliente.obterTodos();
 			if(todosClientes.isEmpty()){
 				System.out.println("Nenhum cliente encontrado");
 			}else{
 				todosClientes.forEach(System.out::println);
 			}
-			*/
+		/* */
 
 		};
 	}
