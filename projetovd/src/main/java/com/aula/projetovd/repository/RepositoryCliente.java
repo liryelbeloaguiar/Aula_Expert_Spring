@@ -1,60 +1,21 @@
 package com.aula.projetovd.repository;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.aula.projetovd.entity.Cliente;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 
-@Repository
-public class RepositoryCliente {
+public interface RepositoryCliente extends JpaRepository<Cliente, Integer> {
 
-    @Autowired
-    private EntityManager entityManager;
+    List<Cliente> findByNomeLike(String nome);
+    List<Cliente> findByNomeOrIdOrderById (String nome, Integer id);
+    boolean existsByNome (String nome);
 
-    @Transactional
-    public Cliente salvar(Cliente cliente) {
-        entityManager.persist(cliente);
-        return cliente;
-    }    
+    @Query(" select c from Cliente c left join fetch c.pedidos p where c.id = :id ")
+    Cliente findClienteFetchPedidots(@Param("id") Integer id);
 
-    @Transactional
-    public Cliente atualizar (Cliente cliente){
-        entityManager.merge(cliente);
-        return cliente;
-    }
-
-    @Transactional
-    public void deletar(Cliente cliente){
-        if(!entityManager.contains(cliente)){
-            cliente = entityManager.merge(cliente);
-        }
-        entityManager.remove(cliente);
-    }
-
-    @Transactional
-    public void deletar(Integer id){
-       Cliente cliente = entityManager.find(Cliente.class, id);
-       deletar(cliente);
-    }
-
-    @Transactional(readOnly = true)
-    public List<Cliente> pesquisaPorNome (String nome){
-        String jpql = " select c from Cliente c where c.nome like :nome ";
-        TypedQuery<Cliente> query = entityManager.createQuery(jpql, Cliente.class);
-        query.setParameter("nome", "%" + nome + "%");
-        return query.getResultList() ;
-    }
-
-    @Transactional
-    public List<Cliente> obterTodos(){
-        return entityManager.createQuery
-        ("from Cliente", Cliente.class).getResultList();
-    }
-
+    
 }

@@ -1,7 +1,8 @@
 package com.aula.projetovd.entity;
 
 
-import io.micrometer.common.lang.NonNull;
+import java.util.Set;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,9 +16,12 @@ public class Cliente{
     @Column(name = "id") //definições de coluna - quando forem diferente os nomes
     private Integer id;
     
-    @NonNull
+    @Column(name = "nome", length = 100)
     private String nome;
-    
+
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+    private Set<Pedido> pedidos;
+
     public Cliente(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
@@ -29,6 +33,11 @@ public class Cliente{
 
     public Cliente() {
     }
-    
 
+    @Override
+    public String toString() {
+        return "Cliente [id=" + id + ", nome=" + nome + "]";
+    }
+
+    
 }

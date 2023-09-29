@@ -1,5 +1,7 @@
 package com.aula.projetovd;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,51 +10,50 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.aula.projetovd.entity.Pedido;
 import com.aula.projetovd.entity.Cliente;
 import com.aula.projetovd.repository.RepositoryCliente;
+import com.aula.projetovd.repository.RepositoryPedido;
 
 @SpringBootApplication
 public class ProjetovdApplication {
 
 	@Bean
-	public CommandLineRunner init(@Autowired RepositoryCliente repositoryCliente){
+	public CommandLineRunner init(@Autowired RepositoryCliente repositoryCliente, 
+								  @Autowired RepositoryPedido repositoryPedido){
 		return args -> {
-			repositoryCliente.salvar( new Cliente("Liryel"));
-			repositoryCliente.salvar( new Cliente("Lara"));
-			repositoryCliente.salvar( new Cliente("Jotinha"));
+			
+			salvarCli(repositoryCliente);
+			Cliente alguem = new Cliente("Liry");
+			repositoryCliente.save(alguem);
 
-			System.out.println("Todos");
-			List<Cliente> todosClientes = repositoryCliente.obterTodos();
-			todosClientes.forEach(System.out::println);
+			Pedido p = new Pedido();
+			p.setCliente(alguem);
+			p.setDataPedido(LocalDate.now());
+			p.setTotal(BigDecimal.valueOf(100));
 
-			todosClientes.forEach(c -> {
-				c.setNome(c.getNome()+" Atualizado");
-				repositoryCliente.atualizar(c);
-			});
+			repositoryPedido.save(p);
 
-			System.out.println("Todos Atualizados");
-			todosClientes = repositoryCliente.obterTodos();
-			todosClientes.forEach(System.out::println);
+			repositoryCliente.findAll().forEach(System.out::println);
 
-			System.out.println("Todos que contenha -Jo-");
-			repositoryCliente.pesquisaPorNome("Jo").forEach(System.out::println);
+			Cliente cliente = repositoryCliente.findClienteFetchPedidots(alguem.getId());
+			System.out.println(cliente);
+			System.out.println(cliente.getPedidos());
+	};}
 
-
-			//Comando Delete não está funcionando
-			System.out.println("Todos depois do delete");
-			repositoryCliente.obterTodos().forEach(c-> {
-				repositoryCliente.deletar(c);;
-			});
-
-			todosClientes = repositoryCliente.obterTodos();
-			if(todosClientes.isEmpty()){
-				System.out.println("Nenhum cliente encontrado");
-			}else{
-				todosClientes.forEach(System.out::println);
-			}
-		/* */
-
-		};
+	public void salvarCli(RepositoryCliente repositoryCliente) {
+		repositoryCliente.save(new Cliente("Liryel"));
+		repositoryCliente.save(new Cliente("Lara"));
+		repositoryCliente.save(new Cliente("Jotinha"));
+		repositoryCliente.save(new Cliente("Luan"));
+		repositoryCliente.save(new Cliente("Fernanda"));
+		repositoryCliente.save(new Cliente("Clarinha"));
+		repositoryCliente.save(new Cliente("Geovana"));
+		repositoryCliente.save(new Cliente("Suzana"));
+		repositoryCliente.save(new Cliente("Paulo"));
+		repositoryCliente.save(new Cliente("Sandro"));
+		repositoryCliente.save(new Cliente("João"));
+		repositoryCliente.save(new Cliente("Cezinha"));
 	}
 
 	public static void main(String[] args) {
