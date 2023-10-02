@@ -1,12 +1,9 @@
 package com.aula.projetovd.entity;
 
-
 import java.util.Set;
-
 import jakarta.persistence.*;
-import lombok.Data;
 
-@Data //do Lombok para não precisar do get e do set
+//Verificar o uso do lombok depois
 @Entity
 @Table(name ="Cliente") //definições de tabela - quando forem diferentes os nomes
 public class Cliente{
@@ -38,6 +35,34 @@ public class Cliente{
     public String toString() {
         return "Cliente [id=" + id + ", nome=" + nome + "]";
     }
+
+    
+    //Get e Set
+    public Integer getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Set<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setPedidos(Set<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    
 
     
 }

@@ -13,9 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "PEDIDO")
 public class Pedido {
@@ -43,5 +41,45 @@ public class Pedido {
         return "Pedido [id=" + id + ", dataPedido=" + dataPedido + ", total=" + total + "]";
     }
 
-    
+    //Get e Set
+    public Integer getId() {
+        return id;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public LocalDate getDataPedido() {
+        return dataPedido;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public Set<ItemPedido> getItems() {
+        return items;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setDataPedido(LocalDate dataPedido) {
+        this.dataPedido = dataPedido;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    public void setItems(Set<ItemPedido> items) {
+        this.items = items;
+    }
+   
 }
