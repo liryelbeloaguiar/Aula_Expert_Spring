@@ -6,14 +6,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.aula.projetovd.entity.Cliente;
-import com.aula.projetovd.repository.RepositoryCliente;
+import com.aula.projetovd.domain.entity.Cliente;
+import com.aula.projetovd.domain.repository.RepositoryCliente;
 
 @SpringBootApplication
 public class ProjetovdApplication {
 
 	@Bean
-	public CommandLineRunner commandLineRunner(@Autowired RepositoryCliente repositoryCliente){
+	public CommandLineRunner commandLineRunner(@Autowired RepositoryCliente repositoryCliente) {
 		return args -> {
 
 			Cliente c = new Cliente("Liryel");
