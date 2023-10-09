@@ -24,6 +24,8 @@ import com.aula.projetovd.rest.dto.InformacoesPedidoDTO;
 import com.aula.projetovd.rest.dto.PedidoDTO;
 import com.aula.projetovd.service.PedidoService;
 
+import jakarta.validation.Valid;
+
 import static org.springframework.http.HttpStatus.*;
 
 import java.time.format.DateTimeFormatter;
@@ -40,7 +42,7 @@ public class PedidoController {
     
     @PostMapping("/pedidos")
     @ResponseStatus(CREATED)
-    public Integer save(@RequestBody PedidoDTO dto){
+    public Integer save(@RequestBody @Valid PedidoDTO dto){
         Pedido pedido = service.salvar(dto);
         return pedido.getId();
     }

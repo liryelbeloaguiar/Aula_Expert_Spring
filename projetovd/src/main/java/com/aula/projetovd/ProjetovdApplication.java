@@ -15,11 +15,6 @@ public class ProjetovdApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(@Autowired RepositoryCliente repositoryCliente) {
 		return args -> {
-
-			Cliente c = new Cliente("Liryel");
-			repositoryCliente.save(c);
-			Cliente c1 = new Cliente("Lara");
-			repositoryCliente.save(c1);
 		};
 	}
 

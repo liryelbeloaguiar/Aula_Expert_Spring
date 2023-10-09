@@ -20,6 +20,8 @@ import static org.springframework.http.HttpStatus.*;
 import com.aula.projetovd.domain.entity.Cliente;
 import com.aula.projetovd.domain.repository.RepositoryCliente;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api")
 public class ClienteController {
@@ -41,7 +43,7 @@ public class ClienteController {
 
     @PostMapping("/clientes")
     @ResponseStatus(CREATED)
-    public Cliente save( @RequestBody Cliente cliente){
+    public Cliente save( @RequestBody @Valid Cliente cliente){
         return repositoryCliente.save(cliente);
     }
 
@@ -70,7 +72,7 @@ public class ClienteController {
 
     @PutMapping("/atualizar/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update(@RequestBody Cliente cliente, 
+    public void update(@RequestBody @Valid Cliente cliente, 
                                  @PathVariable Integer id) {
          repositoryCliente
                             .findById(id)

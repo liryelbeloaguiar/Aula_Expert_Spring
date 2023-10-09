@@ -15,6 +15,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.aula.projetovd.domain.entity.Produto;
 import com.aula.projetovd.domain.repository.RepositoryProduto;
+
+import jakarta.validation.Valid;
+
 import static org.springframework.http.HttpStatus.*;
 
 import java.util.List;
@@ -32,7 +35,7 @@ public class ProdutoController {
 
     @PostMapping("/produtos")
     @ResponseStatus(CREATED)
-    public Produto save(@RequestBody Produto produto){
+    public Produto save(@RequestBody @Valid Produto produto){
         return repositoryProduto.save(produto);
     }
 
@@ -66,7 +69,7 @@ public class ProdutoController {
 
     @PutMapping("/atualizar/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update(@RequestBody Produto produto,
+    public void update(@RequestBody @Valid Produto produto,
                         @PathVariable Integer id){
         repositoryProduto  
                     .findById(id)

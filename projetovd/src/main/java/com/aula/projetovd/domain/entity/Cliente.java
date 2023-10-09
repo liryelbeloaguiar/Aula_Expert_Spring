@@ -2,9 +2,12 @@ package com.aula.projetovd.domain.entity;
 
 import java.util.Set;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 //Verificar o uso do lombok depois
@@ -21,9 +24,12 @@ public class Cliente{
     private Integer id;
     
     @Column(name = "nome", length = 100)
+    @NotEmpty(message = "{campo.nome.obrigatorio}")
     private String nome;
 
     @Column(name = "cpf", length = 11)
+    @NotEmpty(message = "{campo.cpf.obrigatorio}")
+    @CPF(message = "{campo.cpf.invalido}")
     private String cpf;
 
     @JsonIgnore
